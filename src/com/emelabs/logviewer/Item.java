@@ -7,7 +7,9 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 public class Item {
-	private int level;
+	
+	private int priority;
+	private String stringPriority;
 	private Date timestamp;
 	private String tag;
 	private String message;
@@ -19,28 +21,29 @@ public class Item {
 		super();
 	}
 
-	public Item(String level, Date timestamp, String tag, String message) {
+	public Item(String priority, Date timestamp, String tag, String message) {
 		super();
-		this.level = LogUtil.getPriority(level);
-		this.timestamp = timestamp;
-		this.tag = tag;
-		this.message = message;
-	}
-	
-	public Item(int level, Date timestamp, String tag, String message) {
-		super();
-		this.level = level;
+		this.stringPriority = priority;
+		this.priority = LogUtil.getPriority(priority);
 		this.timestamp = timestamp;
 		this.tag = tag;
 		this.message = message;
 	}
 
-	public int getLevel() {
-		return level;
+	public int getPriority() {
+		return priority;
 	}
 
-	public void setLevel(int level) {
-		this.level = level;
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public String getStringPriority() {
+		return stringPriority;
+	}
+
+	public void setStringPriority(String stringPriority) {
+		this.stringPriority = stringPriority;
 	}
 
 	public Date getTimestamp() {
@@ -70,11 +73,12 @@ public class Item {
 	public String getTimestampAsString(){
 		return formatter.format(timestamp);
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Item [level=" + level + ", timestamp=" + timestamp + ", tag="
-				+ tag + ", message=" + message + "]";
+		return "Item [priority=" + priority + ", stringPriority="
+				+ stringPriority + ", timestamp=" + timestamp + ", tag=" + tag
+				+ ", message=" + message + "]";
 	}
 	
 }

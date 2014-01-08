@@ -50,16 +50,21 @@ public class Adapter extends ArrayAdapter<Item>{
 		
 		item = items.get(position);
 		
-		holder.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-		holder.tvTitle.setTextColor(getPriorityColor(item.getLevel()));
-		holder.tvDate = (TextView) view.findViewById(R.id.tvDate);
-		holder.tvDate.setTextColor(getPriorityColor(item.getLevel()));
-		holder.tvMessage = (TextView) view.findViewById(R.id.tvMessage);
-		holder.tvMessage.setTextColor(getPriorityColor(item.getLevel()));
+		int foregroundColor = getPriorityColor(item.getPriority());
 		
+		holder.tvPriority = (TextView) view.findViewById(R.id.tvPriority);
+		holder.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
+		holder.tvDate = (TextView) view.findViewById(R.id.tvDate);
+		holder.tvMessage = (TextView) view.findViewById(R.id.tvMessage);
+		
+		holder.tvPriority.setText(item.getStringPriority());
+		holder.tvPriority.setTextColor(foregroundColor);
 		holder.tvTitle.setText(item.getTag());
+		holder.tvTitle.setTextColor(foregroundColor);
 		holder.tvDate.setText(item.getTimestampAsString());
+		holder.tvDate.setTextColor(foregroundColor);
 		holder.tvMessage.setText(item.getMessage());
+		holder.tvMessage.setTextColor(foregroundColor);
 		
 		return view;
 	}
@@ -98,7 +103,7 @@ public class Adapter extends ArrayAdapter<Item>{
 	
 	public class ViewHolder {
 
-		public TextView tvTitle, tvDate, tvMessage;
+		public TextView tvPriority, tvTitle, tvDate, tvMessage;
 
 	}
 }
