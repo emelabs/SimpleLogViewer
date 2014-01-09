@@ -96,7 +96,7 @@ public class Adapter extends ArrayAdapter<Item>{
 			id = R.color.blue;
 			break;
 		}
-		
+	
 		return context.getResources().getColor(id);
 	}
 	 

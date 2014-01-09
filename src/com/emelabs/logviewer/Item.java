@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 public class Item {
 	
@@ -79,6 +78,11 @@ public class Item {
 		return "Item [priority=" + priority + ", stringPriority="
 				+ stringPriority + ", timestamp=" + timestamp + ", tag=" + tag
 				+ ", message=" + message + "]";
+	}
+
+	
+	public boolean isShowInPriority(int selectedPriority) {
+		return this.priority >= selectedPriority;
 	}
 	
 }
