@@ -106,12 +106,24 @@ public class MainActivity extends Activity implements TextWatcher{
 					
 					Log.d(TAG, "level:" + strLevel + " | date:" + strDate + " | tag:" + tag + " | message:" + message);
 					
+					if(strLevel.equals("E")){
+						line = reader.readLine();
+						message += "\n" + line;
+						
+						while((line = reader.readLine()).trim().startsWith("at")){
+							message += "\n" + line;
+						}
+					}
+					
 					
 					Item item = new Item(strLevel, formatter.parse(strDate), tag, message);
 					itemList.add(item);
 					filterList.add(item);
+					
 				} catch (ParseException e) {
-					Log.e(TAG, "[onCreate]", e);
+					Log.e(TAG, "[onCreate] with line:{" + line + "}", e);
+				} catch (Exception e) {
+					Log.e(TAG, "[onCreate] with line:{" + line + "}", e);
 				}
 			}
 			
