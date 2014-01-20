@@ -63,9 +63,8 @@ public class MainActivity extends Activity implements TextWatcher{
 							android.R.layout.simple_spinner_item);
 
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			prioritySpinner.setAdapter(dataAdapter);
-			prioritySpinner
-					.setOnItemSelectedListener(new OnItemSelectedListener() {
+			prioritySpinner.setAdapter(dataAdapter);			
+			prioritySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 						@Override
 						public void onItemSelected(AdapterView<?> parent,
 								View view, int position, long id) {

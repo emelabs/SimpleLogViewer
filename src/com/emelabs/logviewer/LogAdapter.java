@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LogAdapter extends ArrayAdapter<Item>{
@@ -52,13 +53,12 @@ public class LogAdapter extends ArrayAdapter<Item>{
 		
 		int foregroundColor = getPriorityColor(item.getPriority());
 		
-		holder.tvPriority = (TextView) view.findViewById(R.id.tvPriority);
+		holder.ivPriority = (ImageView) view.findViewById(R.id.ivPriority);
 		holder.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
 		holder.tvDate = (TextView) view.findViewById(R.id.tvDate);
 		holder.tvMessage = (TextView) view.findViewById(R.id.tvMessage);
 		
-		holder.tvPriority.setText(item.getStringPriority());
-		holder.tvPriority.setTextColor(foregroundColor);
+		holder.ivPriority.setImageResource(getPriorityImage(item.getPriority()));
 		holder.tvTitle.setText(item.getTag());
 		holder.tvTitle.setTextColor(foregroundColor);
 		holder.tvDate.setText(item.getTimestampAsString());
@@ -69,6 +69,36 @@ public class LogAdapter extends ArrayAdapter<Item>{
 		return view;
 	}
 	
+	private int getPriorityImage(int priority) {
+		int id;
+		switch (priority) {
+		case Log.VERBOSE:
+			id = R.drawable.ic_verbose;
+			break;
+		
+		case Log.INFO:
+			id = R.drawable.ic_info;
+			break;
+		
+		case Log.DEBUG:
+			id = R.drawable.ic_debug;
+			break;
+			
+		case Log.WARN:
+			id = R.drawable.ic_warn;
+			break;
+			
+		case Log.ERROR:
+			id = R.drawable.ic_error;
+			break;
+
+		default:
+			id = R.drawable.ic_verbose;
+			break;
+		}
+		return id;
+	}
+
 	private int getPriorityColor(int priority){
 		int id;
 		switch (priority) {
@@ -101,9 +131,11 @@ public class LogAdapter extends ArrayAdapter<Item>{
 	}
 	 
 	
+	
 	public class ViewHolder {
 
-		public TextView tvPriority, tvTitle, tvDate, tvMessage;
+		public ImageView ivPriority;
+		public TextView tvTitle, tvDate, tvMessage;
 
 	}
 }
