@@ -79,6 +79,10 @@ public class Item {
 				+ ", message=" + message + "]";
 	}
 
+	/**
+	 * @param selectedPriority
+	 * @return
+	 */
 	public boolean isShowInPriority(int selectedPriority) {
 		return this.priority >= selectedPriority;
 	}

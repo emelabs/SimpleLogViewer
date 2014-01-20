@@ -41,46 +41,56 @@ public class MainActivity extends Activity implements TextWatcher{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		if(getIntent() != null && getIntent().getData() != null){
+		if (getIntent() != null && getIntent().getData() != null) {
 			final String encodedPath = getIntent().getData().getEncodedPath();
 
 			File file = new File(encodedPath);
 			parser = new LogParserImp();
 			List<Item> parseList = parser.parseFile(file);
-			
+
 			filterList = new ArrayList<Item>(parseList);
 			itemList = new ArrayList<Item>(parseList);
-			
+
 			adapter = new LogAdapter(this, R.layout.row, filterList);
-			
+
 			listView = (ListView) findViewById(R.id.listview);
 			listView.setAdapter(adapter);
-			
-			//priority selector
+
+			// priority selector
 			Spinner prioritySpinner = (Spinner) findViewById(R.id.spinnerPriorities);
-			ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter.createFromResource(this, R.array.priorityNames, android.R.layout.simple_spinner_item);
+			ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter
+					.createFromResource(this, R.array.priorityNames,
+							android.R.layout.simple_spinner_item);
 
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			prioritySpinner.setAdapter(dataAdapter);
-			prioritySpinner.setOnItemSelectedListener(new OnItemSelectedListener(){
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view,
-						int position, long id) {
-					String name = (String) parent.getSelectedItem();
-					
-					filterPriority(name);
-				}
+			prioritySpinner
+					.setOnItemSelectedListener(new OnItemSelectedListener() {
+						@Override
+						public void onItemSelected(AdapterView<?> parent,
+								View view, int position, long id) {
+							String name = (String) parent.getSelectedItem();
 
-				@Override
-				public void onNothingSelected(AdapterView<?> parent) {}
-				
-			});
-			
-			//search edittext
+							filterPriority(name);
+						}
+
+						@Override
+						public void onNothingSelected(AdapterView<?> parent) {
+						}
+
+					});
+
+			// search edittext
 			mySearch = (EditText) findViewById(R.id.input_search_query);
 			mySearch.addTextChangedListener(this);
 		}
-
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
 	}
 	
 	private void filterPriority(String priorityName){
@@ -97,14 +107,15 @@ public class MainActivity extends Activity implements TextWatcher{
 		
 		setAdapterToListview(filterList);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	
+	private void setAdapterToListview(List<Item> listToAdapter){
+		adapter = new LogAdapter(this, R.layout.row, listToAdapter);
+		listView.setAdapter(adapter);
 	}
 
+	//***********************************************************************************
+	//*********************************** TextWatcher ***********************************
+	//***********************************************************************************
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
@@ -137,8 +148,4 @@ public class MainActivity extends Activity implements TextWatcher{
 		}
 	}
 	
-	private void setAdapterToListview(List<Item> listToAdapter){
-		adapter = new LogAdapter(this, R.layout.row, listToAdapter);
-		listView.setAdapter(adapter);
-	}
 }
