@@ -4,10 +4,10 @@
     <color name="blue">#ff2570ba</color>
     <color name="grey">#f7f7f7</color>
     
-    <color name="blue_debug">#8858c3</color>
-    <color name="green_info">#248924</color>
-    <color name="red_error">#ff0000</color>
-    <color name="grey_verbose">#434746</color>
-    <color name="orange_warn">#ffa346</color>
-
+    <color name="priority_debug">#8858c3</color>
+    <color name="priority_info">#248924</color>
+    <color name="priority_error">#ff0000</color>
+    <color name="priority_verbose">#434746</color>
+    <color name="priority_warn">#ffa346</color>
+    
 </resources>

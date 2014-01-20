@@ -20,4 +20,8 @@ public class LogUtil {
 	public static int getPriority(String priorityName){
 		return priorities.get(priorityName);
 	}
+	
+	public static boolean isException(String priorityName){
+		return priorityName.equals("E");
+	}
 }

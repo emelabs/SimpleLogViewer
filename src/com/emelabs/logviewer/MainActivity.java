@@ -29,8 +29,9 @@ import android.widget.Spinner;
 public class MainActivity extends Activity implements TextWatcher{
 
 	private static final String TAG = "MainActivity";
+	
 	private ListView listView = null;
-	private Adapter adapter = null;
+	private LogAdapter adapter = null;
 	
 	private List<Item> itemList = new ArrayList<Item>();
 	private List<Item> filterList = new ArrayList<Item>();
@@ -53,7 +54,7 @@ public class MainActivity extends Activity implements TextWatcher{
 			File file = new File(encodedPath);
 			parseFile(file);
 
-			adapter = new Adapter(this, R.layout.row, filterList);
+			adapter = new LogAdapter(this, R.layout.row, filterList);
 			
 			listView = (ListView) findViewById(R.id.listview);
 			listView.setAdapter(adapter);
@@ -106,7 +107,7 @@ public class MainActivity extends Activity implements TextWatcher{
 					
 					Log.d(TAG, "level:" + strLevel + " | date:" + strDate + " | tag:" + tag + " | message:" + message);
 					
-					if(strLevel.equals("E")){
+					if(LogUtil.isException(strLevel)){
 						line = reader.readLine();
 						message += "\n" + line;
 						
@@ -191,7 +192,7 @@ public class MainActivity extends Activity implements TextWatcher{
 	}
 	
 	private void setAdapterToListview(List<Item> listToAdapter){
-		adapter = new Adapter(this, R.layout.row, listToAdapter);
+		adapter = new LogAdapter(this, R.layout.row, listToAdapter);
 		listView.setAdapter(adapter);
 	}
 }
