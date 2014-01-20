@@ -9,9 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Adapter extends ArrayAdapter<Item>{
+public class LogAdapter extends ArrayAdapter<Item>{
 
 	private static final String TAG = "Adapter";
 	
@@ -19,7 +20,7 @@ public class Adapter extends ArrayAdapter<Item>{
 	private List<Item> items = new ArrayList<Item>();
 	private Item item;
 
-	public Adapter(Context context, int resource, List<Item> items) {
+	public LogAdapter(Context context, int resource, List<Item> items) {
 		super(context, resource);
 		this.context = context;
 		this.items = items;
@@ -50,54 +51,90 @@ public class Adapter extends ArrayAdapter<Item>{
 		
 		item = items.get(position);
 		
-		holder.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-		holder.tvTitle.setTextColor(getPriorityColor(item.getLevel()));
-		holder.tvDate = (TextView) view.findViewById(R.id.tvDate);
-		holder.tvDate.setTextColor(getPriorityColor(item.getLevel()));
-		holder.tvMessage = (TextView) view.findViewById(R.id.tvMessage);
-		holder.tvMessage.setTextColor(getPriorityColor(item.getLevel()));
+		int foregroundColor = getPriorityColor(item.getPriority());
 		
+		holder.ivPriority = (ImageView) view.findViewById(R.id.ivPriority);
+		holder.tvTitle = (TextView) view.findViewById(R.id.tvTitle);
+		holder.tvDate = (TextView) view.findViewById(R.id.tvDate);
+		holder.tvMessage = (TextView) view.findViewById(R.id.tvMessage);
+		
+		holder.ivPriority.setImageResource(getPriorityImage(item.getPriority()));
 		holder.tvTitle.setText(item.getTag());
+		holder.tvTitle.setTextColor(foregroundColor);
 		holder.tvDate.setText(item.getTimestampAsString());
+		holder.tvDate.setTextColor(foregroundColor);
 		holder.tvMessage.setText(item.getMessage());
+		holder.tvMessage.setTextColor(foregroundColor);
 		
 		return view;
 	}
 	
+	private int getPriorityImage(int priority) {
+		int id;
+		switch (priority) {
+		case Log.VERBOSE:
+			id = R.drawable.ic_verbose;
+			break;
+		
+		case Log.INFO:
+			id = R.drawable.ic_info;
+			break;
+		
+		case Log.DEBUG:
+			id = R.drawable.ic_debug;
+			break;
+			
+		case Log.WARN:
+			id = R.drawable.ic_warn;
+			break;
+			
+		case Log.ERROR:
+			id = R.drawable.ic_error;
+			break;
+
+		default:
+			id = R.drawable.ic_verbose;
+			break;
+		}
+		return id;
+	}
+
 	private int getPriorityColor(int priority){
 		int id;
 		switch (priority) {
 		case Log.VERBOSE:
-			id = R.color.grey_verbose;
+			id = R.color.priority_verbose;
 			break;
 		
 		case Log.INFO:
-			id = R.color.green_info;
+			id = R.color.priority_info;
 			break;
 		
 		case Log.DEBUG:
-			id = R.color.blue_debug;
+			id = R.color.priority_debug;
 			break;
 			
 		case Log.WARN:
-			id = R.color.orange_warn;
+			id = R.color.priority_warn;
 			break;
 			
 		case Log.ERROR:
-			id = R.color.red_error;
+			id = R.color.priority_error;
 			break;
 
 		default:
-			id = R.color.blue;
+			id = R.color.grey;
 			break;
 		}
-		
+	
 		return context.getResources().getColor(id);
 	}
 	 
 	
+	
 	public class ViewHolder {
 
+		public ImageView ivPriority;
 		public TextView tvTitle, tvDate, tvMessage;
 
 	}

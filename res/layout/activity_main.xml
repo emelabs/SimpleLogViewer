@@ -6,59 +6,80 @@
     android:orientation="vertical" >
 
   <RelativeLayout
-        android:id="@+id/rel_my_search"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/gray_gradient_title_bg" >
+      android:id="@+id/rel_my_search"
+      android:layout_width="fill_parent"
+      android:layout_height="50dp"
+      android:layout_marginBottom="5dp"
+      android:paddingLeft="2dp"
+      android:paddingRight="2dp"
+      android:background="@drawable/gray_gradient_title_bg" >
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="45dip"
-            android:layout_marginBottom="-5dip"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="2dip"
-            android:addStatesFromChildren="true"
-            android:background="@android:drawable/edit_text"
-            android:baselineAligned="false"
-            android:gravity="center_vertical" >
+      <RelativeLayout
+          android:id="@+id/relativeLayout1"
+          android:layout_width="wrap_content"
+          android:layout_height="45dip"
+          android:layout_marginBottom="-5dip"
+          android:layout_marginLeft="10dip"
+          android:layout_marginRight="10dp"
+          android:layout_marginTop="2dip"
+          android:addStatesFromChildren="true"
+          android:background="@android:drawable/edit_text"
+          android:baselineAligned="false"
+          android:gravity="center_vertical" >
 
-            <ImageButton
-                android:id="@+id/button_search"
-                style="@android:style/Widget.Button.Inset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginBottom="3dip"
-                android:layout_marginRight="3dip"
-                android:layout_marginTop="3dip"
-                android:background="@drawable/ic_menu_search"
-                android:contentDescription="@string/search"
-                android:padding="2dip" />
+          <ImageButton
+              android:id="@+id/button_search"
+              style="@android:style/Widget.Button.Inset"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_marginBottom="3dip"
+              android:layout_marginRight="3dip"
+              android:layout_marginTop="3dip"
+              android:background="@drawable/ic_menu_search"
+              android:contentDescription="@string/search"
+              android:padding="2dip" />
 
-            <EditText
-                android:id="@+id/input_search_query"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_toRightOf="@+id/button_search"
-                android:background="@null"
-                android:hint="@string/search"
-                android:maxLines="1"
-                android:paddingLeft="4dip"
-                android:paddingRight="4dip"
-                android:singleLine="true"
-                android:textSize="15sp" />
-        </RelativeLayout>
-    </RelativeLayout>
+          <EditText
+              android:id="@+id/input_search_query"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="4dp"
+              android:layout_toRightOf="@+id/button_search"
+              android:background="@null"
+              android:hint="@string/search"
+              android:maxLines="1"
+              android:paddingLeft="4dip"
+              android:paddingRight="4dip"
+              android:singleLine="true"
+              android:textSize="15sp" />
+
+      </RelativeLayout>
+
+      <Spinner
+          android:id="@+id/spinnerPriorities"
+          android:layout_width="200dp"
+          android:layout_height="wrap_content"
+          android:layout_toRightOf="@+id/relativeLayout1"
+          android:layout_alignParentRight="true"
+          android:gravity="right"         
+          android:layout_marginRight="10dp" />
+      <requestFocus />
+      	
+
+  </RelativeLayout>
+
     <ListView
         android:id="@+id/listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/rel_my_search"
         android:cacheColorHint="#00000000"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:fastScrollEnabled="true" >
+      <requestFocus />
     </ListView>
+    
 
 </RelativeLayout>

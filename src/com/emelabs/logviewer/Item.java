@@ -4,12 +4,32 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 public class Item {
-	private int level;
+	
+	/**
+	 * Priority code
+	 */
+	private int priority;
+	
+	/**
+	 * Priority name
+	 */
+	private String stringPriority;
+	
+	/**
+	 * Log timestamp
+	 */
 	private Date timestamp;
+	
+	/**
+	 * Tag message
+	 */
 	private String tag;
+	
+	/**
+	 * Message
+	 */
 	private String message;
 	
 	@SuppressLint("SimpleDateFormat")
@@ -19,62 +39,51 @@ public class Item {
 		super();
 	}
 
-	public Item(String level, Date timestamp, String tag, String message) {
+	public Item(int priority, String strPriority, Date timestamp, String tag, String message) {
 		super();
-		this.level = LogUtil.getPriority(level);
-		this.timestamp = timestamp;
-		this.tag = tag;
-		this.message = message;
-	}
-	
-	public Item(int level, Date timestamp, String tag, String message) {
-		super();
-		this.level = level;
+		this.stringPriority = strPriority;
+		this.priority = priority;
 		this.timestamp = timestamp;
 		this.tag = tag;
 		this.message = message;
 	}
 
-	public int getLevel() {
-		return level;
+	public int getPriority() {
+		return priority;
 	}
 
-	public void setLevel(int level) {
-		this.level = level;
+	public String getStringPriority() {
+		return stringPriority;
 	}
 
 	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
-
 	public String getTag() {
 		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
 	public String getTimestampAsString(){
 		return formatter.format(timestamp);
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Item [level=" + level + ", timestamp=" + timestamp + ", tag="
-				+ tag + ", message=" + message + "]";
+		return "Item [priority=" + priority + ", stringPriority="
+				+ stringPriority + ", timestamp=" + timestamp + ", tag=" + tag
+				+ ", message=" + message + "]";
 	}
-	
+
+	/**
+	 * @param selectedPriority
+	 * @return
+	 */
+	public boolean isShowInPriority(int selectedPriority) {
+		return this.priority >= selectedPriority;
+	}
 }

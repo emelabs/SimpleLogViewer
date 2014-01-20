@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="priorityNames">
+        <item>VERBOSE</item>
+        <item>DEBUG</item>
+        <item>INFO</item>
+        <item>WARN</item>
+        <item>ERROR</item>
+    </string-array>
+    
+    <integer-array name="priorityIcons">
+        <item>@drawable/ic_verbose</item>
+        <item>@drawable/ic_debug</item>
+        <item>@drawable/ic_info</item>
+        <item>@drawable/ic_warn</item>
+        <item>@drawable/ic_error</item>
+    </integer-array>
+</resources>
