@@ -16,7 +16,7 @@
 
       <RelativeLayout
           android:id="@+id/relativeLayout1"
-          android:layout_width="150dp"
+          android:layout_width="wrap_content"
           android:layout_height="45dip"
           android:layout_marginBottom="-5dip"
           android:layout_marginLeft="10dip"
@@ -58,7 +58,7 @@
 
       <Spinner
           android:id="@+id/spinnerPriorities"
-          android:layout_width="wrap_content"
+          android:layout_width="200dp"
           android:layout_height="wrap_content"
           android:layout_toRightOf="@+id/relativeLayout1"
           android:layout_alignParentRight="true"
