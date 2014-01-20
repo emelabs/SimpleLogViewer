@@ -7,10 +7,29 @@ import android.annotation.SuppressLint;
 
 public class Item {
 	
+	/**
+	 * Priority code
+	 */
 	private int priority;
+	
+	/**
+	 * Priority name
+	 */
 	private String stringPriority;
+	
+	/**
+	 * Log timestamp
+	 */
 	private Date timestamp;
+	
+	/**
+	 * Tag message
+	 */
 	private String tag;
+	
+	/**
+	 * Message
+	 */
 	private String message;
 	
 	@SuppressLint("SimpleDateFormat")
@@ -20,10 +39,10 @@ public class Item {
 		super();
 	}
 
-	public Item(String priority, Date timestamp, String tag, String message) {
+	public Item(int priority, String strPriority, Date timestamp, String tag, String message) {
 		super();
-		this.stringPriority = priority;
-		this.priority = LogUtil.getPriority(priority);
+		this.stringPriority = strPriority;
+		this.priority = priority;
 		this.timestamp = timestamp;
 		this.tag = tag;
 		this.message = message;
@@ -33,42 +52,22 @@ public class Item {
 		return priority;
 	}
 
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-
 	public String getStringPriority() {
 		return stringPriority;
-	}
-
-	public void setStringPriority(String stringPriority) {
-		this.stringPriority = stringPriority;
 	}
 
 	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
-
 	public String getTag() {
 		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
 	public String getTimestampAsString(){
 		return formatter.format(timestamp);
 	}
@@ -80,9 +79,7 @@ public class Item {
 				+ ", message=" + message + "]";
 	}
 
-	
 	public boolean isShowInPriority(int selectedPriority) {
 		return this.priority >= selectedPriority;
 	}
-	
 }

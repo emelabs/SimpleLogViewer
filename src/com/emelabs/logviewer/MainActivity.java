@@ -1,15 +1,8 @@
 package com.emelabs.logviewer;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -33,13 +26,13 @@ public class MainActivity extends Activity implements TextWatcher{
 	private ListView listView = null;
 	private LogAdapter adapter = null;
 	
-	private List<Item> itemList = new ArrayList<Item>();
-	private List<Item> filterList = new ArrayList<Item>();
+	private List<Item> itemList;
+	private List<Item> filterList;
 	
 	private EditText mySearch;
 	private String searchString;
 	
-	private static final SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault());
+	private LogParserImp parser;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +45,12 @@ public class MainActivity extends Activity implements TextWatcher{
 			final String encodedPath = getIntent().getData().getEncodedPath();
 
 			File file = new File(encodedPath);
-			parseFile(file);
-
+			parser = new LogParserImp();
+			List<Item> parseList = parser.parseFile(file);
+			
+			filterList = new ArrayList<Item>(parseList);
+			itemList = new ArrayList<Item>(parseList);
+			
 			adapter = new LogAdapter(this, R.layout.row, filterList);
 			
 			listView = (ListView) findViewById(R.id.listview);
@@ -86,62 +83,11 @@ public class MainActivity extends Activity implements TextWatcher{
 
 	}
 	
-	private void parseFile(File file){
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			String line;
-			while((line = reader.readLine()) != null){
-				try {
-					Log.d(TAG, "[onCreate] line:" + line);
-					String[] split = line.split("\\|");
-					
-					String strLevel = split[0].trim();
-					
-					String strDate = split[1].trim();
-
-					String text = split[2];
-					
-					int pos = text.indexOf("-");
-					String tag = text.substring(0, pos).trim();
-					String message = text.substring(pos+2).trim();
-					
-					Log.d(TAG, "level:" + strLevel + " | date:" + strDate + " | tag:" + tag + " | message:" + message);
-					
-					if(LogUtil.isException(strLevel)){
-						line = reader.readLine();
-						message += "\n" + line;
-						
-						while((line = reader.readLine()).trim().startsWith("at")){
-							message += "\n" + line;
-						}
-					}
-					
-					
-					Item item = new Item(strLevel, formatter.parse(strDate), tag, message);
-					itemList.add(item);
-					filterList.add(item);
-					
-				} catch (ParseException e) {
-					Log.e(TAG, "[onCreate] with line:{" + line + "}", e);
-				} catch (Exception e) {
-					Log.e(TAG, "[onCreate] with line:{" + line + "}", e);
-				}
-			}
-			
-			reader.close();
-
-		} catch (FileNotFoundException e) {
-			Log.e(TAG, "[onCreate]", e);
-		} catch (IOException e) {
-			Log.e(TAG, "[onCreate]", e);
-		}
-	}
-	
-	private void filterPriority(String priority){
-		Log.v(TAG, "[filterPriority] entering with priority:" + priority);
+	private void filterPriority(String priorityName){
+		Log.v(TAG, "[filterPriority] entering with priority:" + priorityName);
 		
 		filterList.clear();
-		int selectedPriority = LogUtil.getPriority(priority.substring(0,1));
+		int selectedPriority = parser.getPriorityByName(priorityName);
 		
 		for (Item item : itemList) {
 			if(item.isShowInPriority(selectedPriority)){
