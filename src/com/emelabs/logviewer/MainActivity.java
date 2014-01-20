@@ -6,18 +6,24 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class MainActivity extends Activity implements TextWatcher{
 
@@ -56,28 +62,25 @@ public class MainActivity extends Activity implements TextWatcher{
 			listView = (ListView) findViewById(R.id.listview);
 			listView.setAdapter(adapter);
 
-			// priority selector
+			// priority spinner
 			Spinner prioritySpinner = (Spinner) findViewById(R.id.spinnerPriorities);
-			ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter
-					.createFromResource(this, R.array.priorityNames,
-							android.R.layout.simple_spinner_item);
-
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			prioritySpinner.setAdapter(dataAdapter);
-			prioritySpinner
-					.setOnItemSelectedListener(new OnItemSelectedListener() {
+			String[] objects = getResources().getStringArray(R.array.priorityNames);
+			int[] images = getPriorityIcons();
+			
+			SpinnerAdapter dataAdapter = new SpinnerAdapter(this, R.layout.spinner_row, objects, images);
+//			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			prioritySpinner.setAdapter(dataAdapter);			
+			prioritySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 						@Override
 						public void onItemSelected(AdapterView<?> parent,
 								View view, int position, long id) {
 							String name = (String) parent.getSelectedItem();
-
 							filterPriority(name);
 						}
 
 						@Override
 						public void onNothingSelected(AdapterView<?> parent) {
 						}
-
 					});
 
 			// search edittext
@@ -113,6 +116,18 @@ public class MainActivity extends Activity implements TextWatcher{
 		listView.setAdapter(adapter);
 	}
 
+	private int[] getPriorityIcons(){
+		TypedArray ar = getResources().obtainTypedArray(R.array.priorityIcons);
+		int len = ar.length();
+		int[] resIds = new int[len];
+		for (int i = 0; i < len; i++){
+		 
+		    resIds[i] = ar.getResourceId(i, 0);
+		}
+		ar.recycle();
+		return resIds;
+	}
+	
 	//***********************************************************************************
 	//*********************************** TextWatcher ***********************************
 	//***********************************************************************************
@@ -145,6 +160,44 @@ public class MainActivity extends Activity implements TextWatcher{
 			Log.d(TAG, "[afterTextChanged] setting item list");
 			filterList.clear();
 			setAdapterToListview(itemList);
+		}
+	}
+	
+	//***********************************************************************************
+	//********************************* Spinner Adapter *********************************
+	//***********************************************************************************
+	public class SpinnerAdapter extends ArrayAdapter<String>{
+
+		String[] objects;
+		int[] images;
+		
+		public SpinnerAdapter(Context context, int textViewResourceId, String[] objects, int[] images) {
+	      super(context, textViewResourceId, objects);
+	      this.objects = objects;
+	      this.images = images;
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			return getCustomView(position, convertView, parent);
+		}
+		
+		@Override
+		public View getDropDownView(int position, View convertView,
+				ViewGroup parent) {
+			return getCustomView(position, convertView, parent);
+		}
+		
+		public View getCustomView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = getLayoutInflater();
+			View row = inflater.inflate(R.layout.spinner_row, parent, false);
+			TextView label = (TextView) row.findViewById(R.id.tvSpinnerText);
+			label.setText(this.objects[position]);
+
+			ImageView iv = (ImageView) row.findViewById(R.id.ivSpinnerPriority);
+			iv.setImageResource(this.images[position]);
+
+			return row;
 		}
 	}
 	

@@ -24,4 +24,6 @@ public interface LogParser {
 	 * @return List items 
 	 */
 	public List<Item> parseFile(File file);
+	
+	
 }
