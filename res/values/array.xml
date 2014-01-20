@@ -7,4 +7,12 @@
         <item>WARN</item>
         <item>ERROR</item>
     </string-array>
+    
+    <integer-array name="priorityIcons">
+        <item>@drawable/ic_verbose</item>
+        <item>@drawable/ic_debug</item>
+        <item>@drawable/ic_info</item>
+        <item>@drawable/ic_warn</item>
+        <item>@drawable/ic_error</item>
+    </integer-array>
 </resources>
