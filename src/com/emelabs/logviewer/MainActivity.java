@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements TextWatcher{
 	private EditText mySearch;
 	private String searchString;
 	
-	private LogParserImp parser;
+	private LogParser parser;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

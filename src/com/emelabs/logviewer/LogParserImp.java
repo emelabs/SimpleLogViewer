@@ -34,12 +34,12 @@ public class LogParserImp implements LogParser{
 	}
 	
 	
-	public int getPriority(String priorityName){
-		return priorities.get(priorityName);
+	public int getPriority(String priorityKey){
+		return priorities.get(priorityKey);
 	}
 	
 	public int getPriorityByName(String priorityName){
-		return priorities.get(priorityName.substring(0,1));
+		return getPriority(priorityName.substring(0,1));
 	}
 	
 	public boolean isException(String priorityName){
